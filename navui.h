@@ -11,3 +11,4 @@ void gps_refresh();
 float gps_getLatitude();
 float gps_getLongitude();
 float gps_getSpeed();
+char* gps_getTime();

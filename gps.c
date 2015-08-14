@@ -45,6 +45,14 @@ float gps_getSpeed() {
 	return gpsdata.fix.speed;
 }
 
+char* gps_getTime() {
+	time_t seconds;
+
+	seconds = ((time_t) gpsdata.fix.time) - 60 * 60 * 4;
+
+	return ctime(&seconds);
+}
+
 void gps_exit() {
 	gps_stream(&gpsdata, WATCH_DISABLE, NULL);
 	gps_close (&gpsdata);
