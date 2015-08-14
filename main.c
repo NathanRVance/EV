@@ -3,6 +3,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <unistd.h>
+#include <time.h>
 
 void halt() {
 	endwin();
@@ -12,16 +13,16 @@ void halt() {
 void main_loop() {
 	char string[200];
 	while(1) {
-		gps_refresh(); //Includes a sleep
+		gps_refresh();
 		io_clearscreen();
 		io_print(0, 0, music_get(string));
-		io_printFloat(0, 1, gps_getLatitude());
-		io_printFloat(0, 2, gps_getLongitude());
-		io_printFloat(0, 3, gps_getSpeed());
-		io_print(0, 4, gps_getTime());
+		if(gps_isSettled()) {
+			io_printFloat(0, 1, gps_getTrack());
+			io_printSpeed(0, 2);
+			io_print(0, 3, gps_getTime());
+		}
 		io_refresh();
 	}
-
 }
 
 int main() {

@@ -4,7 +4,6 @@
 #include <unistd.h>
 #include <math.h>
 
-static struct timeval tv;
 static struct gps_data_t gpsdata;
 
 void gps_init() {
@@ -15,21 +14,9 @@ void gps_init() {
 }
 
 void gps_refresh() {
-	/* wait for 2 seconds to receive data */
+	/* wait for .5 seconds to receive data */
 	if (gps_waiting (&gpsdata, 500000)) {
-		/* read data */
-		if (gps_read(&gpsdata) == -1) {
-			//Error!
-		} else {
-			/* Display data from the GPS receiver. */
-			if ((gpsdata.status == STATUS_FIX) && (gpsdata.fix.mode == MODE_2D || gpsdata.fix.mode == MODE_3D) &&
-				!isnan(gpsdata.fix.latitude) && !isnan(gpsdata.fix.longitude)) {
-				gettimeofday(&tv, NULL);
-				//printf("latitude: %f, longitude: %f, speed: %f, timestamp: %ld\n", gpsdata.fix.latitude, gpsdata.fix.longitude, gpsdata.fix.speed, tv.tv_sec);
-			} else {
-				printf("no GPS data available\n");
-			}
-		}
+		gps_read(&gpsdata);
 	}
 }
 
@@ -42,15 +29,26 @@ float gps_getLongitude() {
 }
 
 float gps_getSpeed() {
-	return gpsdata.fix.speed;
+	//Speed is in knots, convert to Km/hour
+	int speed = gpsdata.fix.speed * 1.852;
+	if(speed > 0.1) {
+		return speed;
+	}
+	return 0;
 }
 
 char* gps_getTime() {
 	time_t seconds;
-
 	seconds = ((time_t) gpsdata.fix.time) - 60 * 60 * 4;
-
 	return ctime(&seconds);
+}
+
+float gps_getTrack() {
+	return gpsdata.fix.track;
+}
+
+int gps_isSettled() {
+	return !isnan(gpsdata.fix.speed);
 }
 
 void gps_exit() {

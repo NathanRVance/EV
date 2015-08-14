@@ -27,3 +27,7 @@ void io_print(int x, int y, char string[]) {
 void io_printFloat(int x, int y, float num) {
 	mvprintw(y, x, "%f", num);
 }
+
+void io_printSpeed(int x, int y) {
+	mvprintw(y, x, "Traveling at %.1f Km/h, %.1f mph", gps_getSpeed(), gps_getSpeed() * 0.621371);
+}
