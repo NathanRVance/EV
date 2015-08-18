@@ -29,8 +29,8 @@ float gps_getLongitude() {
 }
 
 float gps_getSpeed() {
-	//Speed is in knots, convert to Km/hour
-	int speed = gpsdata.fix.speed * 1.852;
+	//Speed is in m/s, convert to Km/hour
+	int speed = gpsdata.fix.speed * 60 * 60 / 1000;
 	if(speed > 0.1) {
 		return speed;
 	}
