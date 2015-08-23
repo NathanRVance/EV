@@ -16,6 +16,7 @@ void main_loop() {
 		gps_refresh();
 		io_clearscreen();
 		io_print(0, 0, music_get(string));
+		checkButtons();
 		if(gps_isSettled()) {
 			io_printFloat(0, 1, gps_getTrack());
 			io_printSpeed(0, 2);
@@ -28,7 +29,7 @@ void main_loop() {
 int main() {
 	io_init();
 	gps_init();
+	buttons_init();
 	main_loop();
-	getch();
 	halt();
 }

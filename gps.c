@@ -14,8 +14,8 @@ void gps_init() {
 }
 
 void gps_refresh() {
-	/* wait for .5 seconds to receive data */
-	if (gps_waiting (&gpsdata, 500000)) {
+	/* wait for .2 seconds to receive data */
+	if (gps_waiting (&gpsdata, 200000)) {
 		gps_read(&gpsdata);
 	}
 }

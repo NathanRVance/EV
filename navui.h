@@ -15,3 +15,6 @@ float gps_getSpeed();
 char* gps_getTime();
 float gps_getTrack();
 int gps_isSettled();
+
+void buttons_init();
+void checkButtons();
