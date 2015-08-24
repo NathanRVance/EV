@@ -17,4 +17,3 @@ float gps_getTrack();
 int gps_isSettled();
 
 void buttons_init();
-void checkButtons();

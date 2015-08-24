@@ -1,6 +1,7 @@
 #include "navui.h"
 #include <wiringPi.h>
 #include <stdlib.h>
+#include <pthread.h>
 
 int pins[] = { 21, 20, 19, 16, 13, 12, 6, 5 };
 int pinlen = 8;
@@ -31,6 +32,25 @@ void buttonPressed(int pin) {
 	}
 }
 
+int checkButtons() {
+	int i;
+	for(i = 0; i < pinlen; i++) {
+		if(! digitalRead(pins[i])) {
+			buttonPressed(pins[i]);
+			return 1;
+		}
+	}
+	return 0;
+}
+
+void *buttonPoller(void *arg) {
+	while(1) {
+		if(checkButtons()) {
+			delay(200);
+		}
+	}
+}
+
 void buttons_init() {
 	wiringPiSetupGpio();
 	int i;
@@ -38,13 +58,6 @@ void buttons_init() {
 		pinMode(pins[i], INPUT);
 		pullUpDnControl(pins[i], PUD_UP);
 	}
-}
-
-void checkButtons() {
-	int i;
-	for(i = 0; i < pinlen; i++) {
-		if(! digitalRead(pins[i])) {
-			buttonPressed(pins[i]);
-		}
-	}
+	pthread_t pth;
+	pthread_create(&pth, NULL, buttonPoller, "");
 }
