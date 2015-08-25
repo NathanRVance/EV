@@ -47,8 +47,29 @@ float gps_getTrack() {
 	return gpsdata.fix.track;
 }
 
+char* gps_getDirection_private() {
+	char ret[3] = {0, 0, 0};	
+	float track = gps_getTrack();
+	if(track > 337.5 && track < 22.5) return "N";
+	if(track < 67.5) return "NE";
+	if(track < 112.5) return "E";
+	if(track < 157.5) return "SE";
+	if(track < 202.5) return "S";
+	if(track < 247.5) return "SW";
+	if(track < 292.5) return "W";
+	if(track < 337.5) return "NW";
+	return "F"; //for FAIL!
+}
+
+char* dir = "N";
+char* gps_getDirection() {
+	char* tmp = gps_getDirection_private();
+	if(tmp[0] != 'F') dir = tmp;
+	return dir;
+}
 int gps_isSettled() {
-	return !isnan(gpsdata.fix.speed);
+	return gpsdata.fix.mode > 1 &&
+		!isnan(gpsdata.fix.speed);
 }
 
 void gps_exit() {
