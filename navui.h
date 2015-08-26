@@ -1,13 +1,12 @@
-#include <wchar.h>
 void io_init();
 void io_clearscreen();
 void io_refresh();
 void io_print(int x, int y, char string[]);
-void io_printWide(int x, int y, wchar_t string[]);
+void io_printWide(int x, int y, char string[]);
 void io_printFloat(int x, int y, float num);
 void io_printSpeed(int x, int y);
 
-wchar_t* music_get(wchar_t ret[]);
+char* music_get(char ret[]);
 
 void gps_init();
 void gps_refresh();
