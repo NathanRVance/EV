@@ -11,15 +11,14 @@ void halt() {
 }
 
 void main_loop() {
-	char string[400];
 	while(1) {
 		gps_refresh();
 		//io_clearscreen();
-		io_printWide(0, 0, music_get(string));
+		io_printMusic(0, 0);
 		if(gps_isSettled()) {
-			io_print(0, 2, gps_getDirection());
-			io_printSpeed(0, 3);
-			io_print(0, 4, gps_getTime());
+			io_print(0, 3, gps_getDirection());
+			io_printSpeed(0, 4);
+			io_print(0, 5, gps_getTime());
 		}
 		io_refresh();
 	}

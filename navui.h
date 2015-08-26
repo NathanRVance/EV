@@ -2,11 +2,14 @@ void io_init();
 void io_clearscreen();
 void io_refresh();
 void io_print(int x, int y, char string[]);
-void io_printWide(int x, int y, char string[]);
 void io_printFloat(int x, int y, float num);
 void io_printSpeed(int x, int y);
+void io_printMusic(int x, int y);
 
-char* music_get(char ret[]);
+char* music_getArtist();
+char* music_getTitle();
+char* music_getTime();
+char* music_getStatus();
 
 void gps_init();
 void gps_refresh();

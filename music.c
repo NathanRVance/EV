@@ -2,10 +2,10 @@
 #include <stdio.h>
 #include "navui.h"
 
-char* music_get(char ret[]) {
+char* music_get(char ret[], char command[]) {
 	FILE *fp;
 
-	fp = popen("sudo -u nathan xmms2 current", "r");
+	fp = popen(command, "r");
 	
 	if(fp != NULL) {
 		//ret is formatted UTF-8. This will be a problem when we print because
@@ -13,6 +13,32 @@ char* music_get(char ret[]) {
 		fgets(ret, 399, fp);
 		pclose(fp);
 	}
+
+	//The shell puts a newline at the end. Annoying!
+	int i = 0;
+	while(ret[i++] != '\0');
+	i -= 2;
+	if(ret[i] == '\n') ret[i] = '\0';
 	
 	return ret;
+}
+
+char* music_getArtist() {
+	static char ret[400];
+	return music_get(ret, "sudo -u nathan xmms2 current -f '${artist}'");
+}
+
+char* music_getTitle() {
+	static char ret[400];
+	return music_get(ret, "sudo -u nathan xmms2 current -f '${title}'");
+}
+
+char* music_getTime() {
+	static char ret[400];
+	return music_get(ret, "sudo -u nathan xmms2 current -f '${playtime} of ${duration}'");
+}
+
+char* music_getStatus() {
+	static char ret[400];
+	return music_get(ret, "sudo -u nathan xmms2 current -f '${playback_status}'");
 }
