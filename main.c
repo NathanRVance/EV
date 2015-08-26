@@ -11,7 +11,7 @@ void halt() {
 }
 
 void main_loop() {
-	wchar_t string[400];
+	char string[400];
 	while(1) {
 		gps_refresh();
 		//io_clearscreen();
