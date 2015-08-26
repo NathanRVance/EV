@@ -24,8 +24,20 @@ void io_print(int x, int y, char string[]) {
 	mvprintw(y, x, "%s                                                    ", string);
 }
 
-void io_printWide(int x, int y, wchar_t string[]) {
-	mvprintw(y, x, "%ls                                                    ", string);
+void io_printWide(int x, int y, char string[]) {
+	//Encoded in UTF-8, need to do some fancy footwork
+	int i = 0;
+	while(string[i] != '\0') {
+		if(string[i] <= 127)
+			mvaddch(y, x++, string[i++]);
+		else //Special character
+			char tmp[3];
+			tmp[0] = string[i++];
+			tmp[1] = string[i++];
+			tmp[2] = '\0';
+			mvprintw(y, x++, "%s", tmp);
+	}
+	mvprintw(y, x++, "                                                    ");
 }
 
 void io_printFloat(int x, int y, float num) {
