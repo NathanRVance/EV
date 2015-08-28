@@ -22,3 +22,6 @@ char* gps_getDirection();
 int gps_isSettled();
 
 void buttons_init();
+
+void stats_init();
+double stats_refresh();
