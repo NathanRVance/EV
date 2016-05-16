@@ -25,20 +25,20 @@ char* music_get(char ret[], char command[]) {
 
 char* music_getArtist() {
 	static char ret[400];
-	return music_get(ret, "sudo -u nathan xmms2 current -f '${artist}'");
+	return music_get(ret, "mpc current -f '\%artist\%'");
 }
 
 char* music_getTitle() {
 	static char ret[400];
-	return music_get(ret, "sudo -u nathan xmms2 current -f '${title}'");
+	return music_get(ret, "mpc current -f '\%title\%'");
 }
 
 char* music_getTime() {
 	static char ret[400];
-	return music_get(ret, "sudo -u nathan xmms2 current -f '${playtime} of ${duration}'");
+	return music_get(ret, "mpc | sed '2q;d' | awk '{print $3}'");
 }
 
 char* music_getStatus() {
 	static char ret[400];
-	return music_get(ret, "sudo -u nathan xmms2 current -f '${playback_status}'");
+	return music_get(ret, "mpc | sed '2q;d' | awk '{print $1}' | sed 's/\\[\\|\\]//g'");
 }

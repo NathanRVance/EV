@@ -17,13 +17,13 @@ void buttonPressed(int pin) {
 		case 16:
 			break;
 		case 13:
-			system("sudo -u nathan xmms2 next");
+			system("mpc next");
 			break;
 		case 12:
-			system("sudo -u nathan xmms2 prev");
+			system("mpc prev");
 			break;
 		case 6:
-			system("sudo -u nathan xmms2 toggle");
+			system("mpc toggle");
 			break;
 		case 5:
 			break;
