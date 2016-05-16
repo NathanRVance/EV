@@ -1,5 +1,5 @@
 # EV
-Before running, make sure xmms2 is playing and that gpsd is running.
+Before running, make sure that mpc is playing and that gpsd is running.
 
 Something like this appended to the end of your .bashrc should do. Note that nav_ui is run as sudo because it uses GPIO pins:
 
